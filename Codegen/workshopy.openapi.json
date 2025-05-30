@@ -1,0 +1,1346 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Workshopy",
+    "description": "Ukázkové API pro aplikaci workshopy",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Workshops"
+    },
+    {
+      "name": "Registrations"
+    }
+  ],
+  "paths": {
+    "/workshops": {
+      "get": {
+        "summary": "Seznam workshopů",
+        "deprecated": false,
+        "description": "Vrací seznam workshopů dle zadaného filtru",
+        "operationId": "get-workshops",
+        "tags": [
+          "Workshops"
+        ],
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "description": "Výraz pro full-textové vyhledávání",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string",
+              "examples": [
+                "REST API"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Stránka",
+            "required": false,
+            "example": 1,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 1,
+              "examples": [
+                1
+              ],
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Počet položek na stránku",
+            "required": false,
+            "example": 20,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "maximum": 100,
+              "minimum": 0,
+              "examples": [
+                20
+              ]
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Řazení záznamů",
+            "required": false,
+            "example": "-id",
+            "schema": {
+              "type": "string",
+              "pattern": "^[+-].+",
+              "examples": [
+                "+id"
+              ],
+              "enum": [
+                "+id",
+                "-id",
+                "+name",
+                "-name"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkshopsList"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#validationproblemdetails",
+                  "title": "Validation Failed",
+                  "status": 400,
+                  "detail": "See errors for more information.",
+                  "errors": [
+                    {
+                      "property": "paidDate",
+                      "message": "Field is required"
+                    },
+                    {
+                      "property": "firstname",
+                      "message": "Field is required"
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Resource not found",
+                  "status": 404
+                }
+              }
+            },
+            "headers": {}
+          },
+          "406": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Not acceptable",
+                  "status": 406
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Vytvoření workshopu",
+        "deprecated": false,
+        "description": "Vytvoření workshopu dle zadaných parametrů. Pozor, slug už není možné později změnit.",
+        "operationId": "create-workshop",
+        "tags": [
+          "Workshops"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkshopCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workshop",
+                  "description": "Workshop"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#validationproblemdetails",
+                  "title": "Validation Failed",
+                  "status": 400,
+                  "detail": "See errors for more information.",
+                  "errors": [
+                    {
+                      "property": "paidDate",
+                      "message": "Field is required"
+                    },
+                    {
+                      "property": "firstname",
+                      "message": "Field is required"
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Resource not found",
+                  "status": 404
+                }
+              }
+            },
+            "headers": {}
+          },
+          "406": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Not acceptable",
+                  "status": 406
+                }
+              }
+            },
+            "headers": {}
+          },
+          "415": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Unsupported Media Type",
+                  "status": 415
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/workshops/{id}": {
+      "get": {
+        "summary": "Detail workshopu",
+        "deprecated": false,
+        "description": "Vrací detailní informace o workshopu",
+        "operationId": "get-workshop",
+        "tags": [
+          "Workshops"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID workshopu",
+            "required": true,
+            "example": "kalsk87u",
+            "schema": {
+              "type": "string",
+              "format": "regex",
+              "pattern": "^[a-z0-9]{8}$",
+              "examples": [
+                "kpa8us65"
+              ],
+              "minLength": 8,
+              "maxLength": 8
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workshop",
+                  "description": "Workshop"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#validationproblemdetails",
+                  "title": "Validation Failed",
+                  "status": 400,
+                  "detail": "See errors for more information.",
+                  "errors": [
+                    {
+                      "property": "paidDate",
+                      "message": "Field is required"
+                    },
+                    {
+                      "property": "firstname",
+                      "message": "Field is required"
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Resource not found",
+                  "status": 404
+                }
+              }
+            },
+            "headers": {}
+          },
+          "406": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Not acceptable",
+                  "status": 406
+                }
+              }
+            },
+            "headers": {}
+          },
+          "410": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Resource has been deleted",
+                  "status": 410
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "Odstranění workshopu",
+        "deprecated": false,
+        "description": "Odstraní workshop dle ID",
+        "operationId": "delete-workshop",
+        "tags": [
+          "Workshops"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID workshopu",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "regex",
+              "pattern": "^[a-z0-9]{8}$",
+              "examples": [
+                "kpa8us65"
+              ],
+              "minLength": 8,
+              "maxLength": 8
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#validationproblemdetails",
+                  "title": "Validation Failed",
+                  "status": 400,
+                  "detail": "See errors for more information.",
+                  "errors": [
+                    {
+                      "property": "paidDate",
+                      "message": "Field is required"
+                    },
+                    {
+                      "property": "firstname",
+                      "message": "Field is required"
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Resource not found",
+                  "status": 404
+                }
+              }
+            },
+            "headers": {}
+          },
+          "406": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Not acceptable",
+                  "status": 406
+                }
+              }
+            },
+            "headers": {}
+          },
+          "410": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Resource has been deleted",
+                  "status": 410
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "Aktualizace workshopu",
+        "deprecated": false,
+        "description": "Aktualizuje informace o workshopu",
+        "operationId": "update-workshop",
+        "tags": [
+          "Workshops"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "regex",
+              "pattern": "^[a-z0-9]{8}$",
+              "examples": [
+                "kpa8us65"
+              ],
+              "minLength": 8,
+              "maxLength": 8
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkshopUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workshop",
+                  "description": "Workshop"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#validationproblemdetails",
+                  "title": "Validation Failed",
+                  "status": 400,
+                  "detail": "See errors for more information.",
+                  "errors": [
+                    {
+                      "property": "paidDate",
+                      "message": "Field is required"
+                    },
+                    {
+                      "property": "firstname",
+                      "message": "Field is required"
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Resource not found",
+                  "status": 404
+                }
+              }
+            },
+            "headers": {}
+          },
+          "406": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Not acceptable",
+                  "status": 406
+                }
+              }
+            },
+            "headers": {}
+          },
+          "410": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Resource has been deleted",
+                  "status": 410
+                }
+              }
+            },
+            "headers": {}
+          },
+          "415": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Unsupported Media Type",
+                  "status": 415
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/registrations": {
+      "get": {
+        "summary": "Seznam registrací",
+        "deprecated": false,
+        "description": "Vrací seznam registrací dle zadaného filtru",
+        "operationId": "get-registrations",
+        "tags": [
+          "Registrations"
+        ],
+        "parameters": [
+          {
+            "name": "workshopId",
+            "in": "query",
+            "description": "ID workshopu",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string",
+              "examples": [
+                "kpa8us65"
+              ],
+              "pattern": "^[a-z0-9]{8}$",
+              "minLength": 8,
+              "maxLength": 8
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Stránka",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 1,
+              "examples": [
+                1
+              ],
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Počet položek na stránku",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "maximum": 100,
+              "minimum": 0,
+              "examples": [
+                20
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationsList"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#validationproblemdetails",
+                  "title": "Validation Failed",
+                  "status": 400,
+                  "detail": "See errors for more information.",
+                  "errors": [
+                    {
+                      "property": "paidDate",
+                      "message": "Field is required"
+                    },
+                    {
+                      "property": "firstname",
+                      "message": "Field is required"
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Resource not found",
+                  "status": 404
+                }
+              }
+            },
+            "headers": {}
+          },
+          "406": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Not acceptable",
+                  "status": 406
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/registrations/{id}": {
+      "delete": {
+        "summary": "Odstranění registrace",
+        "deprecated": false,
+        "description": "Odstranění registrace dle ID",
+        "operationId": "delete-registration",
+        "tags": [
+          "Registrations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID registrace",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "examples": [
+                "8b68f375-5207-4baf-9954-4aaf0a39c299"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#validationproblemdetails",
+                  "title": "Validation Failed",
+                  "status": 400,
+                  "detail": "See errors for more information.",
+                  "errors": [
+                    {
+                      "property": "paidDate",
+                      "message": "Field is required"
+                    },
+                    {
+                      "property": "firstname",
+                      "message": "Field is required"
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Resource not found",
+                  "status": 404
+                }
+              }
+            },
+            "headers": {}
+          },
+          "406": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Not acceptable",
+                  "status": 406
+                }
+              }
+            },
+            "headers": {}
+          },
+          "410": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails",
+                  "title": "Resource has been deleted",
+                  "status": 410
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Workshop": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "",
+            "description": "ID",
+            "format": "regex",
+            "pattern": "^[a-z0-9]{8}$",
+            "examples": [
+              "kpa8us65"
+            ],
+            "minLength": 8,
+            "maxLength": 8
+          },
+          "slug": {
+            "type": "string",
+            "description": "Název pro URL",
+            "maxLength": 300,
+            "examples": [
+              "vyvoj-rest-api-v-net"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "description": "Název workshopu",
+            "maxLength": 300,
+            "examples": [
+              "Vývoj REST API v .NET"
+            ]
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Začátek workshopu",
+            "format": "date-time"
+          },
+          "capacity": {
+            "type": "integer",
+            "description": "Kapacita (počet osob)",
+            "format": "int32",
+            "default": 0,
+            "examples": [
+              15
+            ],
+            "minimum": 0,
+            "maximum": 100
+          },
+          "price": {
+            "type": "number",
+            "description": "Cena v CZK",
+            "format": "decimal",
+            "examples": [
+              999.9
+            ],
+            "minimum": 0,
+            "default": 0,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "title",
+          "startDate",
+          "capacity",
+          "price"
+        ]
+      },
+      "WorkshopsList": {
+        "type": "object",
+        "properties": {
+          "totalItems": {
+            "type": "integer",
+            "description": "Celkem workshopů dle filtru",
+            "format": "uint32",
+            "examples": [
+              10
+            ],
+            "default": 0,
+            "minimum": 0
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Workshop",
+              "description": "Workshop"
+            },
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "Seznam workshopů"
+          }
+        },
+        "required": [
+          "totalItems",
+          "items"
+        ]
+      },
+      "WorkshopCreate": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "description": "Název pro URL",
+            "maxLength": 300,
+            "examples": [
+              "vyvoj-rest-api-v-net"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "description": "Název workshopu",
+            "maxLength": 300,
+            "examples": [
+              "Vývoj REST API v .NET"
+            ]
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Začátek workshopu",
+            "format": "date-time"
+          },
+          "capacity": {
+            "type": "integer",
+            "description": "Kapacita (počet osob)",
+            "format": "int32",
+            "default": 0,
+            "examples": [
+              15
+            ],
+            "minimum": 0,
+            "maximum": 100
+          },
+          "price": {
+            "type": "number",
+            "description": "Cena v CZK",
+            "format": "decimal",
+            "examples": [
+              999.9
+            ],
+            "minimum": 0,
+            "default": 0
+          }
+        },
+        "required": [
+          "slug",
+          "title",
+          "startDate",
+          "capacity",
+          "price"
+        ]
+      },
+      "WorkshopUpdate": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Název workshopu",
+            "maxLength": 300,
+            "examples": [
+              "Vývoj REST API v .NET"
+            ]
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Začátek workshopu",
+            "format": "date-time"
+          },
+          "capacity": {
+            "type": "integer",
+            "description": "Kapacita (počet osob)",
+            "format": "int32",
+            "default": 0,
+            "examples": [
+              15
+            ],
+            "minimum": 0,
+            "maximum": 100
+          },
+          "price": {
+            "type": "number",
+            "description": "Cena v CZK",
+            "format": "decimal",
+            "examples": [
+              999.9
+            ],
+            "minimum": 0,
+            "default": 0
+          }
+        },
+        "required": [
+          "title",
+          "startDate",
+          "capacity",
+          "price"
+        ]
+      },
+      "Registration": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unikátní ID registrace",
+            "format": "uuid"
+          },
+          "workshopId": {
+            "type": "string",
+            "description": "ID workshopu",
+            "minLength": 8,
+            "maxLength": 8,
+            "pattern": "^[a-z0-9]{8}$",
+            "examples": [
+              "alsp98as"
+            ],
+            "format": "regex"
+          },
+          "name": {
+            "type": "string",
+            "description": "Jméno a příjmení studenta",
+            "examples": [
+              "Jan Novák"
+            ]
+          },
+          "created": {
+            "type": "string",
+            "description": "Datum vytvoření registrace",
+            "format": "date-time"
+          },
+          "price": {
+            "type": "number",
+            "description": "Cena kurzovného",
+            "default": 0,
+            "format": "decimal",
+            "examples": [
+              1500
+            ],
+            "minimum": 0
+          },
+          "paidDate": {
+            "type": "string",
+            "description": "Datum úhrady",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "created",
+          "price",
+          "workshopId"
+        ]
+      },
+      "RegistrationsList": {
+        "type": "object",
+        "properties": {
+          "totalItems": {
+            "type": "integer",
+            "format": "uint32",
+            "examples": [
+              10
+            ],
+            "default": 0,
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Celkem registrací dle filtru"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Registration",
+              "description": "Registrace"
+            },
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "Seznam registrací"
+          }
+        },
+        "required": [
+          "totalItems",
+          "items"
+        ]
+      },
+      "ValidationError": {
+        "type": "object",
+        "properties": {
+          "property": {
+            "type": "string",
+            "description": "Název vlastnosti",
+            "examples": [
+              "paidDate"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "description": "Popis chyby",
+            "examples": [
+              "Field is required"
+            ]
+          }
+        },
+        "required": [
+          "property",
+          "message"
+        ]
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Typ chyby dle URL",
+            "format": "uri",
+            "examples": [
+              "https://workshopy.apidog.io/chybov%C3%A9-struktury-961422m0#problemdetails"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "examples": [
+              "Unexpected error"
+            ],
+            "description": "Obecný popis chyby"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 400,
+            "maximum": 599,
+            "examples": [
+              500
+            ],
+            "description": "Stavový kód shodný s HTTP status code"
+          },
+          "detail": {
+            "type": "string",
+            "examples": [
+              "Unexpected server error. Use RequestId header for tracking details."
+            ],
+            "description": "Detailní informace k chybě"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      }
+    },
+    "securitySchemes": {}
+  },
+  "servers": [
+    {
+      "url": "",
+      "description": "Cloud Mock"
+    }
+  ],
+  "security": []
+}
