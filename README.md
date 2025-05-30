@@ -1,4 +1,7 @@
-# Generátor kódu z OpenAPI specifikace
+# TechEd 2025 - Generátor kódu z OAS
+
+> [!NOTE]  
+> Níže uvedená dokumentace k projektu je automaticky generovaná službou GitHub Copilot.
 
 TechEd 2025 - Ukázka automatického generování C# Web API z OpenAPI specifikace
 
